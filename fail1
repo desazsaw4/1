@@ -1,0 +1,40 @@
+function merge_sort($arr) {
+    if (count($arr) <= 1) {
+        return $arr;
+    }
+
+    $mid = count($arr) / 2;
+    $left = array_slice($arr, 0, $mid);
+    $right = array_slice($arr, $mid);
+
+    $left = merge_sort($left);
+    $right = merge_sort($right);
+
+    return merge($left, $right);
+}
+
+function merge($left, $right) {
+    $result = [];
+
+    while (count($left) > 0 && count($right) > 0) {
+        if ($left[0] <= $right[0]) {
+            $result[] = array_shift($left);
+        } else {
+            $result[] = array_shift($right);
+        }
+    }
+
+    while (count($left) > 0) {
+        $result[] = array_shift($left);
+    }
+
+    while (count($right) > 0) {
+        $result[] = array_shift($right);
+    }
+
+    return $result;
+}
+
+$numbers = [5, 2, 8, 1, 9];
+$sortedNumbers = merge_sort($numbers);
+print_r($sortedNumbers);
